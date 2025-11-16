@@ -8,10 +8,15 @@ export default function initSignaling(io) {
 
   io.on('connection', (socket) => {
     meta.set(socket.id, { userId: randomUUID(), lastSkip: 0 })
+    // Broadcast current online count to all
+    const broadcastOnline = () => io.emit('online-count', { count: io.sockets.sockets.size })
+    broadcastOnline()
 
     socket.on('join', ({ userId } = {}) => {
       // Optional custom client id
       if (userId) meta.set(socket.id, { ...(meta.get(socket.id) || {}), userId })
+      // send current online count to the newly joined client as well
+      socket.emit('online-count', { count: io.sockets.sockets.size })
     })
 
     socket.on('find-partner', () => {
@@ -70,6 +75,7 @@ export default function initSignaling(io) {
       if (partner) io.to(partner).emit('partner-left')
       mm.removeFromQueue(socket.id)
       meta.delete(socket.id)
+      broadcastOnline()
     }
 
     socket.on('leave', cleanup)

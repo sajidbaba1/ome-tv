@@ -16,6 +16,7 @@ export function registerCoreHandlers(socket, handlers) {
     onIce = () => {},
     onPartnerLeft = () => {},
     onChat = () => {},
+    onOnlineCount = () => {},
   } = handlers
 
   socket.on('matched', onMatched)
@@ -24,6 +25,7 @@ export function registerCoreHandlers(socket, handlers) {
   socket.on('ice-candidate', onIce)
   socket.on('partner-left', onPartnerLeft)
   socket.on('chat', onChat)
+  socket.on('online-count', onOnlineCount)
 }
 
 export function sendChat(socket, text) {

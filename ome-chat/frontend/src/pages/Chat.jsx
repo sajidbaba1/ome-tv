@@ -19,6 +19,7 @@ export default function Chat() {
   const localStreamRef = useRef(null)
   const [messages, setMessages] = useState([])
   const [chatInput, setChatInput] = useState('')
+  const [onlineCount, setOnlineCount] = useState(1)
 
   useEffect(() => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080'
@@ -53,6 +54,7 @@ export default function Chat() {
       onChat: ({ text, from, ts }) => {
         setMessages(prev => [...prev, { sender: 'Stranger', text, ts: ts || Date.now() }])
       },
+      onOnlineCount: ({ count }) => setOnlineCount(count || 1),
     })
 
     async function init() {
@@ -138,7 +140,10 @@ export default function Chat() {
     <Container maxWidth="lg" sx={{ py: 2 }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
         <Typography variant="h5">Ome Chat</Typography>
-        <Chip label={status} color="info" variant="outlined" />
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Chip label={`Online: ${onlineCount}`} color="success" variant="outlined" />
+          <Chip label={status} color="info" variant="outlined" />
+        </Stack>
       </Stack>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
