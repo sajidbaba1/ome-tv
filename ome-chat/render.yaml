@@ -9,6 +9,6 @@ services:
     autoDeploy: true
     envVars:
       - key: CORS_ORIGIN
-        value: https://your-vercel-app.vercel.app
+        value: https://frontend-ewtplmw11-sajids-projects-6524aee0.vercel.app
     healthCheckPath: /
     region: oregon
