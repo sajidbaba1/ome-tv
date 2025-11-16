@@ -46,5 +46,5 @@ export function createMatchmaking() {
     return pairs.get(id) || null
   }
 
-  return { queue, pairs, findPartnerFor, removeFromQueue, getPartner, unpair, isPaired }
+  return { queue, pairs, findPartnerFor, removeFromQueue, getPartner, unpair, isPaired, pairSockets }
 }
